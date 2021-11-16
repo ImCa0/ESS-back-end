@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "origin.allow",
+      "type": "java.lang.String",
+      "description": "允许跨域请求的域."
+    }
+  ]
+}

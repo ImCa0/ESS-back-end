@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    username: root
+    password: nuaalabMySQL
+    url: jdbc:mysql://101.132.32.165:7249/enterprise_service_station?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+server:
+  servlet:
+    context-path: /ess-api
+  port: 9001
+
+origin:
+  allow: http://localhost:9528  #dev
