@@ -7,13 +7,13 @@ import lombok.NoArgsConstructor;
 
 /**
  * @author ImCaO
- * @description 用户实体类
+ * @description 用户登录 VO
  * @date Created at 2021/11/16 16:27
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserLogin {
+public class UserLoginVO {
 
     private String username;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

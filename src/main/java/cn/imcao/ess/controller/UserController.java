@@ -3,8 +3,10 @@ package cn.imcao.ess.controller;
 import cn.imcao.ess.entity.response.FailResponse;
 import cn.imcao.ess.entity.response.Response;
 import cn.imcao.ess.entity.response.SuccessResponse;
-import cn.imcao.ess.entity.user.UserInfo;
-import cn.imcao.ess.entity.user.UserLogin;
+import cn.imcao.ess.entity.user.UserDO;
+import cn.imcao.ess.entity.user.UserInfoVO;
+import cn.imcao.ess.entity.user.UserLoginVO;
+import cn.imcao.ess.service.UserService;
 import cn.imcao.ess.utils.JwtUtil;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,38 +23,52 @@ import java.util.List;
 @RestController
 public class UserController {
 
+    private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
     /**
      * 登录请求
-     * @param userLogin 账号密码
+     *
+     * @param userLoginVO 账号密码
      * @return 登录成功返回 Token
      */
     @PostMapping("/user/login")
-    public Response login(@RequestBody UserLogin userLogin) {
+    public Response login(@RequestBody UserLoginVO userLoginVO) {
 
-        String token = JwtUtil.sign(userLogin.getUsername());
-        HashMap<String, String> data = new HashMap<>();
-        data.put("token", token);
-        return new SuccessResponse(data);
+        UserDO userDO = userService.verify(userLoginVO);
+        if (userDO != null) {
+            String token = JwtUtil.sign(userDO.getUsername(), userDO.getEnterpriseId());
+            HashMap<String, String> data = new HashMap<>();
+            data.put("token", token);
+            return new SuccessResponse(data);
+        } else {
+            return new FailResponse(500, "用户名和密码不匹配");
+        }
     }
 
     /**
      * 获取用户信息
+     *
      * @return 用户信息
      */
     @GetMapping("/user/info")
     public Response info() {
 
-        UserInfo userInfo = new UserInfo();
-        userInfo.setAvatar("https://www.imcao.cn/avatar.png");
-        userInfo.setIntroduction("测试用户");
-        userInfo.setName("username");
+        UserInfoVO userInfoVO = new UserInfoVO();
+        userInfoVO.setAvatar("https://www.imcao.cn/avatar.png");
+        userInfoVO.setIntroduction("测试用户");
+        userInfoVO.setName("测试用户");
         List<String> roles = Collections.singletonList("admin");
-        userInfo.setRoles(roles);
-        return new SuccessResponse(userInfo);
+        userInfoVO.setRoles(roles);
+        return new SuccessResponse(userInfoVO);
     }
 
     /**
      * 退出登录
+     *
      * @param token Token
      * @return 退出成功返回用户名
      */
@@ -66,6 +82,7 @@ public class UserController {
 
     /**
      * Token 验证失败
+     *
      * @return 失败响应模型
      */
     @RequestMapping("/user/fail")

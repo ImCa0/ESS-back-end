@@ -15,8 +15,9 @@ import java.util.HashMap;
  */
 public class JwtUtil {
 
-    public static final String TOKEN_LOGIN_NAME = "loginName";
-    public static final String TOKEN_SUCCESS = "success";
+    public static final String TOKEN_USERNAME = "username";
+    public static final String TOKEN_ENTERPRISE_ID = "enterpriseId";
+    public static final String TOKEN_SUCCESS = "success:";
     public static final String TOKEN_FAIL = "fail:";
 
     // 过期时间1天
@@ -29,7 +30,7 @@ public class JwtUtil {
      * @param username 用户名
      * @return Token
      */
-    public static String sign(String username) {
+    public static String sign(String username, int enterpriseId) {
 
         // 过期时间
         Date date = new Date(System.currentTimeMillis() + EXPIRE_TIME);
@@ -43,7 +44,10 @@ public class JwtUtil {
         header.put("alg", "HS256");
 
         // 附带username生成签名
-        return JWT.create().withHeader(header).withClaim(TOKEN_LOGIN_NAME, username)
+        return JWT.create()
+                .withHeader(header)
+                .withClaim(TOKEN_USERNAME, username)
+                .withClaim(TOKEN_ENTERPRISE_ID, String.valueOf(enterpriseId))
                 .withExpiresAt(date).sign(algorithm);
     }
 
@@ -57,7 +61,9 @@ public class JwtUtil {
             Algorithm algorithm = Algorithm.HMAC256(TOKEN_SECRET);
             JWTVerifier verifier = JWT.require(algorithm).build();
             DecodedJWT jwt = verifier.verify(token);
-            result += jwt.getClaims().get(TOKEN_LOGIN_NAME).asString();
+            result += jwt.getClaims().get(TOKEN_USERNAME).asString();
+            result += ",";
+            result += jwt.getClaims().get(TOKEN_ENTERPRISE_ID).asString();
             return result;
         } catch (Exception e) {
             return TOKEN_FAIL + e.getMessage();
