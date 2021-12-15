@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.imcao.ess.mapper.task.TaskMapper">
+    <select id="queryToBeAcceptedList" resultType="TaskDO">
+        select *
+        from task
+        where e_id = #{eId}
+          and state = '待接受'
+        limit #{taskRequest.page}, #{taskRequest.limit};
+    </select>
+    <select id="queryToBeAcceptedTotal" resultType="int">
+        select count(*)
+        from task
+        where e_id = #{eId}
+          and state = '待接受';
+    </select>
+    <update id="accept" parameterType="TaskDO">
+        update task
+        set state = '正在加工'
+        where order_number = #{task.orderNumber}
+          and task_number = #{task.taskNumber};
+    </update>
+    <update id="decline" parameterType="TaskDO">
+        update task
+        set state = '已拒绝'
+        where order_number = #{task.orderNumber}
+          and task_number = #{task.taskNumber};
+    </update>
+    <select id="queryProcessingList" resultType="TaskDO">
+        select *
+        from task
+        where e_id = #{eId}
+          and state = '正在加工'
+        limit #{taskRequest.page}, #{taskRequest.limit};
+    </select>
+    <select id="queryProcessingTotal" resultType="int">
+        select count(*)
+        from task
+        where e_id = #{eId}
+          and state = '正在加工';
+    </select>
+    <select id="queryCompletedList" resultType="TaskDO">
+        select *
+        from task
+        where e_id = #{eId}
+          and state = '已完成'
+        limit #{taskRequest.page}, #{taskRequest.limit};
+    </select>
+    <select id="queryCompletedTotal" resultType="int">
+        select count(*)
+        from task
+        where e_id = #{eId}
+          and state = '已完成';
+    </select>
+    <select id="query6Tasks" resultType="TaskDO">
+        select *
+        from task
+        where e_id = #{eId}
+        order by delivery_date desc
+        limit 6;
+    </select>
+</mapper>

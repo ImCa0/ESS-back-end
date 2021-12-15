@@ -16,5 +16,5 @@ import lombok.NoArgsConstructor;
 public class TokenVerity {
     private boolean success;
     private String username;
-    private String enterpriseId;
+    private int enterpriseId;
 }

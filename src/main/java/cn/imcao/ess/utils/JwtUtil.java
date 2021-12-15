@@ -5,7 +5,6 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import lombok.Data;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -49,7 +48,7 @@ public class JwtUtil {
         return JWT.create()
                 .withHeader(header)
                 .withClaim(TOKEN_USERNAME, username)
-                .withClaim(TOKEN_ENTERPRISE_ID, String.valueOf(enterpriseId))
+                .withClaim(TOKEN_ENTERPRISE_ID, enterpriseId)
                 .withExpiresAt(date).sign(algorithm);
     }
 
@@ -64,7 +63,7 @@ public class JwtUtil {
             DecodedJWT jwt = verifier.verify(token);
             TokenVerity tokenVerity = new TokenVerity();
             tokenVerity.setUsername(jwt.getClaims().get(TOKEN_USERNAME).asString());
-            tokenVerity.setEnterpriseId(jwt.getClaims().get(TOKEN_ENTERPRISE_ID).asString());
+            tokenVerity.setEnterpriseId(jwt.getClaims().get(TOKEN_ENTERPRISE_ID).asInt());
             tokenVerity.setSuccess(true);
             return tokenVerity;
         } catch (Exception e) {

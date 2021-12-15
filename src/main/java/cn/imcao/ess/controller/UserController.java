@@ -7,7 +7,7 @@ import cn.imcao.ess.entity.user.TokenVerity;
 import cn.imcao.ess.entity.user.UserDO;
 import cn.imcao.ess.entity.user.UserInfoVO;
 import cn.imcao.ess.entity.user.UserLoginVO;
-import cn.imcao.ess.service.UserService;
+import cn.imcao.ess.service.user.UserService;
 import cn.imcao.ess.utils.JwtUtil;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +22,7 @@ import java.util.List;
  */
 
 @RestController
+@RequestMapping("/user")
 public class UserController {
 
     private final UserService userService;
@@ -36,7 +37,7 @@ public class UserController {
      * @param userLoginVO 账号密码
      * @return 登录成功返回 Token
      */
-    @PostMapping("/user/login")
+    @PostMapping("/login")
     public Response login(@RequestBody UserLoginVO userLoginVO) {
 
         UserDO userDO = userService.verify(userLoginVO);
@@ -55,8 +56,8 @@ public class UserController {
      *
      * @return 用户信息
      */
-    @GetMapping("/user/info")
-    public Response info(@RequestHeader("X-Token") String token) {
+    @GetMapping("/info")
+    public Response info(@RequestParam("token") String token) {
 
         TokenVerity verity = JwtUtil.verity(token);
         if (verity.isSuccess()) {
@@ -69,7 +70,7 @@ public class UserController {
             userInfoVO.setRoles(roles);
             return new SuccessResponse(userInfoVO);
         }
-        return new FailResponse(50008, "权限验证失败，请重新登录！");
+        return new FailResponse(50008, "权限验证失败，请重新登录!");
     }
 
     /**
@@ -78,7 +79,7 @@ public class UserController {
      * @param token Token
      * @return 退出成功返回用户名
      */
-    @PostMapping("/user/logout")
+    @PostMapping("/logout")
     public Response logout(@RequestHeader("X-Token") String token) {
 
         TokenVerity verity = JwtUtil.verity(token);
@@ -90,7 +91,7 @@ public class UserController {
      *
      * @return 失败响应模型
      */
-    @RequestMapping("/user/fail")
+    @RequestMapping("/fail")
     public Response fail() {
         return new FailResponse(50008, "权限验证失败，请重新登录！");
     }

@@ -1,9 +1,9 @@
-package cn.imcao.ess.service.impl;
+package cn.imcao.ess.service.user.impl;
 
 import cn.imcao.ess.entity.user.UserDO;
 import cn.imcao.ess.entity.user.UserLoginVO;
-import cn.imcao.ess.mapper.UserMapper;
-import cn.imcao.ess.service.UserService;
+import cn.imcao.ess.mapper.user.UserMapper;
+import cn.imcao.ess.service.user.UserService;
 import org.springframework.stereotype.Service;
 
 /**

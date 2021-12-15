@@ -1,4 +1,4 @@
-package cn.imcao.ess.service;
+package cn.imcao.ess.service.user;
 
 import cn.imcao.ess.entity.user.UserDO;
 import cn.imcao.ess.entity.user.UserLoginVO;
