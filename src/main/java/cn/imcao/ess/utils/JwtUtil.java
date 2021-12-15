@@ -1,9 +1,11 @@
 package cn.imcao.ess.utils;
 
+import cn.imcao.ess.entity.user.TokenVerity;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import lombok.Data;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -55,18 +57,20 @@ public class JwtUtil {
      * @param token Token
      * @return 验证结果
      */
-    public static String verity(String token) {
-        String result = TOKEN_SUCCESS;
+    public static TokenVerity verity(String token) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(TOKEN_SECRET);
             JWTVerifier verifier = JWT.require(algorithm).build();
             DecodedJWT jwt = verifier.verify(token);
-            result += jwt.getClaims().get(TOKEN_USERNAME).asString();
-            result += ",";
-            result += jwt.getClaims().get(TOKEN_ENTERPRISE_ID).asString();
-            return result;
+            TokenVerity tokenVerity = new TokenVerity();
+            tokenVerity.setUsername(jwt.getClaims().get(TOKEN_USERNAME).asString());
+            tokenVerity.setEnterpriseId(jwt.getClaims().get(TOKEN_ENTERPRISE_ID).asString());
+            tokenVerity.setSuccess(true);
+            return tokenVerity;
         } catch (Exception e) {
-            return TOKEN_FAIL + e.getMessage();
+            TokenVerity tokenVerity = new TokenVerity();
+            tokenVerity.setSuccess(false);
+            return tokenVerity;
         }
     }
 }

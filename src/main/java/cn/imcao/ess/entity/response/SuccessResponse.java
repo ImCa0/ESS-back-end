@@ -1,8 +1,6 @@
 package cn.imcao.ess.entity.response;
 
 import cn.imcao.ess.utils.Constants;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 
 /**
  * @author ImCaO

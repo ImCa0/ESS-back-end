@@ -3,6 +3,7 @@ package cn.imcao.ess.controller;
 import cn.imcao.ess.entity.response.FailResponse;
 import cn.imcao.ess.entity.response.Response;
 import cn.imcao.ess.entity.response.SuccessResponse;
+import cn.imcao.ess.entity.user.TokenVerity;
 import cn.imcao.ess.entity.user.UserDO;
 import cn.imcao.ess.entity.user.UserInfoVO;
 import cn.imcao.ess.entity.user.UserLoginVO;
@@ -75,9 +76,8 @@ public class UserController {
     @PostMapping("/user/logout")
     public Response logout(@RequestHeader("X-Token") String token) {
 
-        String tokenValue = JwtUtil.verity(token);
-        String username = tokenValue.replaceFirst(JwtUtil.TOKEN_SUCCESS, "");
-        return new SuccessResponse(username);
+        TokenVerity verity = JwtUtil.verity(token);
+        return new SuccessResponse(verity);
     }
 
     /**

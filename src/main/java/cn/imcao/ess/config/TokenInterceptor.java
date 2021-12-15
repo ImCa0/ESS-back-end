@@ -1,5 +1,6 @@
 package cn.imcao.ess.config;
 
+import cn.imcao.ess.entity.user.TokenVerity;
 import cn.imcao.ess.utils.JwtUtil;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -19,8 +20,8 @@ public class TokenInterceptor implements HandlerInterceptor {
         try {
             String token = request.getHeader("X-Token");
             if (token != null) {
-                String tokenValue = JwtUtil.verity(token);
-                if (tokenValue.startsWith(JwtUtil.TOKEN_SUCCESS)) {
+                TokenVerity tokenVerity = JwtUtil.verity(token);
+                if (tokenVerity.isSuccess()) {
                     return true;
                 }
             }
