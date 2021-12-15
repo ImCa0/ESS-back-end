@@ -1,8 +1,8 @@
 spring:
   datasource:
     username: root
-    password: nuaalabMySQL
-    url: jdbc:mysql://101.132.32.165:7249/ESS?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8
+    password: ENC(F4LSIvGxKkQxtsKMMhRovtWPAAtKe4N1O6mhLNt1mfjDM2nbFwMWbyGMToniSuwz)
+    url: ENC(jZ2r5YnKpEK/kcII92zo1ZiGCdWJp4eYpD4AmokOFLBIKGQjG7xdff58RvtEJal7Hol8BZElqi26hNmkNY4KdKp2/K1rf98Bg37Avx8BQPwMj/LpHQv77SclAhaE4YZsJ7Fdtd3mYYbcmbUIxxCUn3d3luhwfOHulCe+BVAwL7IwdhjEMLS4iuSMPLsPf7OC)
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
