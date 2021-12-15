@@ -56,15 +56,20 @@ public class UserController {
      * @return 用户信息
      */
     @GetMapping("/user/info")
-    public Response info() {
+    public Response info(@RequestHeader("X-Token") String token) {
 
-        UserInfoVO userInfoVO = new UserInfoVO();
-        userInfoVO.setAvatar("https://www.imcao.cn/avatar.png");
-        userInfoVO.setIntroduction("测试用户");
-        userInfoVO.setName("测试用户");
-        List<String> roles = Collections.singletonList("admin");
-        userInfoVO.setRoles(roles);
-        return new SuccessResponse(userInfoVO);
+        TokenVerity verity = JwtUtil.verity(token);
+        if (verity.isSuccess()) {
+            UserDO userDO = userService.queryByUsername(verity.getUsername());
+            UserInfoVO userInfoVO = new UserInfoVO();
+            userInfoVO.setAvatar(userDO.getAvatar());
+            userInfoVO.setIntroduction(userDO.getIntroduction());
+            userInfoVO.setName(userDO.getName());
+            List<String> roles = Collections.singletonList(userDO.getRoles());
+            userInfoVO.setRoles(roles);
+            return new SuccessResponse(userInfoVO);
+        }
+        return new FailResponse(50008, "权限验证失败，请重新登录！");
     }
 
     /**
