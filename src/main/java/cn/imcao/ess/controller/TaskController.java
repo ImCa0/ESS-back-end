@@ -54,4 +54,11 @@ public class TaskController {
             return new FailResponse(500,  "拒绝失败");
         }
     }
+
+    @GetMapping("/processing")
+    public Response processing(@RequestHeader("X-Token") String token, TaskRequestVO taskRequestVO) {
+        TokenVerity verity = JwtUtil.verity(token);
+        Map<String, Object> res = taskService.fetchProcessing(verity.getEnterpriseId(), taskRequestVO);
+        return new SuccessResponse(res);
+    }
 }

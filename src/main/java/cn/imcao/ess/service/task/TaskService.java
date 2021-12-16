@@ -36,19 +36,12 @@ public interface TaskService {
     int decline(TaskDO task);
 
     /**
-     * 查询正在加工任务
+     * 正在加工任务页面请求
      * @param eId 企业 ID
      * @param taskRequest 制造任务请求 VO
-     * @return 正在加工任务列表
+     * @return 待接受任务列表、总数
      */
-    List<TaskDO> queryProcessingList(int eId, TaskRequestVO taskRequest);
-
-    /**
-     * 查询正在加工任务总数
-     * @param eId 企业 ID
-     * @return 正在加工任务总数
-     */
-    int queryProcessingTotal(int eId);
+    Map<String, Object> fetchProcessing(int eId, TaskRequestVO taskRequest);
 
     /**
      * 查询已完成任务

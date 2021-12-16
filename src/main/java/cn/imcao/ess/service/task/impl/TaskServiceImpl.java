@@ -46,14 +46,14 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<TaskDO> queryProcessingList(int eId, TaskRequestVO taskRequest) {
+    public Map<String, Object> fetchProcessing(int eId, TaskRequestVO taskRequest) {
+        HashMap<String, Object> map = new HashMap<>();
         taskRequest.setPage((taskRequest.getPage() - 1) * taskRequest.getLimit());
-        return taskMapper.queryProcessingList(eId, taskRequest);
-    }
-
-    @Override
-    public int queryProcessingTotal(int eId) {
-        return taskMapper.queryProcessingTotal(eId);
+        List<TaskDO> tasks = taskMapper.queryProcessingList(eId, taskRequest);
+        int total = taskMapper.queryProcessingTotal(eId);
+        map.put("list", tasks);
+        map.put("total", total);
+        return map;
     }
 
     @Override
