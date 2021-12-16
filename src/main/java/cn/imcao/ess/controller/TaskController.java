@@ -61,4 +61,11 @@ public class TaskController {
         Map<String, Object> res = taskService.fetchProcessing(verity.getEnterpriseId(), taskRequestVO);
         return new SuccessResponse(res);
     }
+
+    @GetMapping("/completed")
+    public Response completed(@RequestHeader("X-Token") String token, TaskRequestVO taskRequestVO) {
+        TokenVerity verity = JwtUtil.verity(token);
+        Map<String, Object> res = taskService.fetchCompleted(verity.getEnterpriseId(), taskRequestVO);
+        return new SuccessResponse(res);
+    }
 }

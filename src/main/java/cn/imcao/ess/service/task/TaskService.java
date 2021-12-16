@@ -44,19 +44,12 @@ public interface TaskService {
     Map<String, Object> fetchProcessing(int eId, TaskRequestVO taskRequest);
 
     /**
-     * 查询已完成任务
+     * 已完成任务页面请求
      * @param eId 企业 ID
      * @param taskRequest 制造任务请求 VO
-     * @return 已完成任务列表
+     * @return 待接受任务列表、总数
      */
-    List<TaskDO> queryCompletedList(int eId, TaskRequestVO taskRequest);
-
-    /**
-     * 查询已完成任务总数
-     * @param eId 企业 ID
-     * @return 已完成任务总数
-     */
-    int queryCompletedTotal(int eId);
+    Map<String, Object> fetchCompleted(int eId, TaskRequestVO taskRequest);
 
     /**
      * 查询最近 6 个任务，用于首页展示
