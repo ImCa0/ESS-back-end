@@ -6,7 +6,9 @@ import cn.imcao.ess.mapper.task.TaskMapper;
 import cn.imcao.ess.service.task.TaskService;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author ImCaO
@@ -16,7 +18,6 @@ import java.util.List;
 @Service
 public class TaskServiceImpl implements TaskService {
 
-
     private final TaskMapper taskMapper;
 
     public TaskServiceImpl(TaskMapper taskMapper) {
@@ -24,14 +25,14 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<TaskDO> queryToBeAcceptedList(int eId, TaskRequestVO taskRequest) {
+    public Map<String, Object> fetchToBeAccepted(int eId, TaskRequestVO taskRequest) {
+        HashMap<String, Object> map = new HashMap<>();
         taskRequest.setPage((taskRequest.getPage() - 1) * taskRequest.getLimit());
-        return taskMapper.queryToBeAcceptedList(eId, taskRequest);
-    }
-
-    @Override
-    public int queryToBeAcceptedTotal(int eId) {
-        return taskMapper.queryToBeAcceptedTotal(eId);
+        List<TaskDO> tasks = taskMapper.queryToBeAcceptedList(eId, taskRequest);
+        int total = taskMapper.queryToBeAcceptedTotal(eId);
+        map.put("list", tasks);
+        map.put("total", total);
+        return map;
     }
 
     @Override

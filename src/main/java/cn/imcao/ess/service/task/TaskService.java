@@ -4,6 +4,7 @@ import cn.imcao.ess.entity.task.TaskDO;
 import cn.imcao.ess.entity.task.TaskRequestVO;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author ImCaO
@@ -13,19 +14,12 @@ import java.util.List;
 public interface TaskService {
 
     /**
-     * 查询待接受任务
+     * 待接受任务页面请求
      * @param eId 企业 ID
      * @param taskRequest 制造任务请求 VO
-     * @return 待接受任务列表
+     * @return 待接受任务列表、总数
      */
-    List<TaskDO> queryToBeAcceptedList(int eId, TaskRequestVO taskRequest);
-
-    /**
-     * 查询待接受任务总数
-     * @param eId 企业 ID
-     * @return 待接受任务总数
-     */
-    int queryToBeAcceptedTotal(int eId);
+    Map<String, Object> fetchToBeAccepted(int eId, TaskRequestVO taskRequest);
 
     /**
      * 接受任务
