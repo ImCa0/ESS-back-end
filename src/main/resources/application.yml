@@ -1,4 +1,12 @@
 spring:
+  neo4j:
+    uri: bolt://localhost:7687
+    authentication:
+      username: neo4j
+      password: ENC(nri+955rkIt/Bt8ppU1HlPp/3ABrYpcwbC8/LzN06sSKSRP2sx98DcAbXjK9SmwZ)
+  data:
+    neo4j:
+      database: ess
   datasource:
     username: root
     password: ENC(F4LSIvGxKkQxtsKMMhRovtWPAAtKe4N1O6mhLNt1mfjDM2nbFwMWbyGMToniSuwz)

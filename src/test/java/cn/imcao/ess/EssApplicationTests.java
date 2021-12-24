@@ -13,7 +13,6 @@ class EssApplicationTests {
 
     @Test
     void contextLoads() {
-
     }
 
     private String encrypt(String originPassword) {
