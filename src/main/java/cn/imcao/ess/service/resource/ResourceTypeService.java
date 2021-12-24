@@ -12,4 +12,6 @@ import org.springframework.data.domain.Page;
 public interface ResourceTypeService {
 
     Page<ResourceType> queryPage(Integer enterpriseId, ResourceTypeQueryVO resourceTypeQueryVO);
+
+    Integer createResourceType(Integer enterpriseId, ResourceType resourceType);
 }

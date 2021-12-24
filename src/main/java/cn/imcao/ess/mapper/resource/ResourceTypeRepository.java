@@ -11,22 +11,22 @@ import java.util.UUID;
 
 /**
  * @author ImCaO
- * @description 制造资源类型仓库
+ * @description 制造资源类型库
  * @date Created at 2021/12/23 9:58
  */
 
 public interface ResourceTypeRepository extends Neo4jRepository<ResourceType, UUID> {
 
     @Query(value = "MATCH (:Enterprise{enterpriseId:$enterpriseId})-[:HAS_RESOURCE_TYPE]->(n:ResourceType) " +
-            "OPTIONAL MATCH (n)-[r]->(m:Property) " +
             "WHERE n.name CONTAINS $name AND n.tag CONTAINS $tag AND n.type CONTAINS $type " +
+            "OPTIONAL MATCH (n)-[r]->(m:Property) " +
             "RETURN n, collect(r), collect(m) :#{orderBy(#pageable)} SKIP $skip LIMIT $limit",
             countQuery = "MATCH (:Enterprise{enterpriseId:$enterpriseId})-[:HAS_RESOURCE_TYPE]->(n:ResourceType) " +
                     "WHERE n.name CONTAINS $name AND n.tag CONTAINS $tag AND n.type CONTAINS $type " +
                     "RETURN count(n)")
     Page<ResourceType> queryPage(@Param("enterpriseId") Integer enterpriseId,
-                                             @Param("name") String name,
-                                             @Param("tag") String tag,
-                                             @Param("type") String type,
-                                             Pageable pageable);
+                                 @Param("name") String name,
+                                 @Param("tag") String tag,
+                                 @Param("type") String type,
+                                 Pageable pageable);
 }

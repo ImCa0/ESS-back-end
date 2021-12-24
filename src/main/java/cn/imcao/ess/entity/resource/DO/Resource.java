@@ -49,9 +49,6 @@ public class Resource {
     @CreatedDate
     private Long date;
 
-    @Relationship(type = "HAS_RESOURCE", direction = Relationship.Direction.INCOMING)
-    private ResourceType belongTo;
-
     @Relationship(type = "HAS_PROPERTY", direction = Relationship.Direction.OUTGOING)
     private List<HasProperty> hasProperties;
 }
