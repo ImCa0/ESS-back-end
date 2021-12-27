@@ -57,4 +57,13 @@ public class ResourceTypeServiceImpl implements ResourceTypeService {
         }
         return 0;
     }
+
+    @Override
+    public Integer updateResourceType(ResourceType resourceType) {
+        if (resourceTypeRepository.findById(resourceType.getUuid()).isPresent()) {
+            resourceTypeRepository.save(resourceType);
+            return 1;
+        }
+        return 0;
+    }
 }
