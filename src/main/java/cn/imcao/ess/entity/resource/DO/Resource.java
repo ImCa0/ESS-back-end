@@ -47,7 +47,7 @@ public class Resource {
     private String createBy;
 
     @CreatedDate
-    private Long date;
+    private Long createAt;
 
     @Relationship(type = "HAS_RESOURCE", direction = Relationship.Direction.INCOMING)
     private ResourceType type;

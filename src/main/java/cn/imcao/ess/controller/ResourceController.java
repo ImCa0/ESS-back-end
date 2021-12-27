@@ -9,13 +9,11 @@ import cn.imcao.ess.entity.user.TokenVerity;
 import cn.imcao.ess.service.resource.ResourceService;
 import cn.imcao.ess.utils.JwtUtil;
 import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author ImCaO
@@ -45,6 +43,24 @@ public class ResourceController {
             res.put("list", list);
             res.put("total", total);
             return new SuccessResponse(res);
+        } catch (Exception e) {
+            return new FailResponse(500, e.getMessage());
+        }
+    }
+
+    @PostMapping("/create/{typeId}")
+    public Response createResource(@RequestHeader("X-Token") String token,
+                                   @PathVariable("typeId") String uuid,
+                                   Resource resource) {
+        TokenVerity verity = JwtUtil.verity(token);
+        resource.setCreateBy(verity.getUsername());
+        try {
+            Integer create = resourceService.createResource(UUID.fromString(uuid), resource);
+            if (create == 1) {
+                return new SuccessResponse("创建成功");
+            } else {
+                return new FailResponse(400, "创建失败");
+            }
         } catch (Exception e) {
             return new FailResponse(500, e.getMessage());
         }

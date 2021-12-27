@@ -1,6 +1,6 @@
 package cn.imcao.ess.service.resource.impl;
 
-import cn.imcao.ess.entity.resource.DO.Resource;
+import cn.imcao.ess.entity.resource.DO.*;
 import cn.imcao.ess.entity.resource.VO.ResourceQueryVO;
 import cn.imcao.ess.mapper.resource.ResourceRepository;
 import cn.imcao.ess.mapper.resource.ResourceTypeRepository;
@@ -9,6 +9,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Optional;
+import java.util.UUID;
 
 /**
  * @author ImCaO
@@ -21,8 +25,11 @@ public class ResourceServiceImpl implements ResourceService {
 
     private final ResourceRepository resourceRepository;
 
-    public ResourceServiceImpl(ResourceTypeRepository resourceTypeRepository, ResourceRepository resourceRepository) {
+    private final ResourceTypeRepository resourceTypeRepository;
+
+    public ResourceServiceImpl(ResourceTypeRepository resourceTypeRepository, ResourceRepository resourceRepository, ResourceTypeRepository resourceTypeRepository1) {
         this.resourceRepository = resourceRepository;
+        this.resourceTypeRepository = resourceTypeRepository1;
     }
 
 
@@ -42,12 +49,27 @@ public class ResourceServiceImpl implements ResourceService {
     }
 
     @Override
-    public Integer createResource(Integer enterpriseId, Resource resource) {
-        return null;
+    public Integer createResource(UUID resourceTypeId, Resource resource) {
+        Optional<ResourceType> resourceTypeOptional = resourceTypeRepository.findById(resourceTypeId);
+        if (resourceTypeOptional.isPresent()) {
+            ResourceType resourceType = resourceTypeOptional.get();
+            resource.setType(resourceType);
+            resource.setHasProperties(new ArrayList<>());
+            for (Property property : resourceType.getProperties()) {
+                resource.getHasProperties().add(HasProperty.builder().property(property).build());
+            }
+            resourceRepository.save(resource);
+            return 1;
+        }
+        return 0;
     }
 
     @Override
     public Integer updateResource(Resource resource) {
-        return null;
+        if (resourceRepository.findById(resource.getUuid()).isPresent()) {
+            resourceRepository.save(resource);
+            return 1;
+        }
+        return 0;
     }
 }
