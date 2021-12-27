@@ -44,7 +44,4 @@ public class ResourceType {
 
     @Relationship(type = "HAS_PRESET_PROPERTY", direction = Relationship.Direction.OUTGOING)
     private List<cn.imcao.ess.entity.resource.DO.Property> properties;
-
-    @Relationship(type = "HAS_RESOURCE", direction = Relationship.Direction.OUTGOING)
-    private List<Resource> resources;
 }
