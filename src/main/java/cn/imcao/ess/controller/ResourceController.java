@@ -65,4 +65,18 @@ public class ResourceController {
             return new FailResponse(500, e.getMessage());
         }
     }
+
+    @PostMapping("/update")
+    public Response updateResource(@RequestBody Resource resource) {
+        try {
+            Integer update = resourceService.updateResource(resource);
+            if (update == 1) {
+                return new SuccessResponse("更新成功");
+            } else {
+                return new FailResponse(400, "更新失败");
+            }
+        } catch (Exception e) {
+            return new FailResponse(500, e.getMessage());
+        }
+    }
 }

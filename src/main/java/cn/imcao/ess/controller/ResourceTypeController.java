@@ -66,7 +66,7 @@ public class ResourceTypeController {
     }
 
     @PostMapping("/update")
-    public Response updateResourceType(ResourceType resourceType) {
+    public Response updateResourceType(@RequestBody ResourceType resourceType) {
         try {
             Integer update = resourceTypeService.updateResourceType(resourceType);
             if (update == 1) {

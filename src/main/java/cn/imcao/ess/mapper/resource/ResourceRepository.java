@@ -23,8 +23,9 @@ public interface ResourceRepository extends Neo4jRepository<Resource, UUID> {
             "AND n.identifier CONTAINS $identifier " +
             "AND t.name CONTAINS $type " +
             "AND (n.isShared = $isShared OR $isShared IS NULL)" +
-            "OPTIONAL MATCH (n)-[r2]->(p:Property) " +
-            "RETURN n, collect(r1), collect(t), collect(r2), collect(p) " +
+            "OPTIONAL MATCH (n)-[r2]->(p1:Property) " +
+            "OPTIONAL MATCH (t)-[r3]->(p2:Property) " +
+            "RETURN n, collect(r1), collect(t), collect(r2), collect(p1), collect(r3), collect(p2) " +
             ":#{orderBy(#pageable)} SKIP $skip LIMIT $limit",
             countQuery = "MATCH (:Enterprise{enterpriseId:$enterpriseId})" +
                     "-[:HAS_RESOURCE_TYPE]->(t:ResourceType)" +
