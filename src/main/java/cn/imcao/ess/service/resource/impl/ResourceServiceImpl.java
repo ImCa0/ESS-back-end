@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -31,7 +32,6 @@ public class ResourceServiceImpl implements ResourceService {
         this.resourceRepository = resourceRepository;
         this.resourceTypeRepository = resourceTypeRepository1;
     }
-
 
     @Override
     public Page<Resource> queryPage(Integer enterpriseId, ResourceQueryVO vo) {
@@ -56,7 +56,7 @@ public class ResourceServiceImpl implements ResourceService {
             resource.setType(resourceType);
             resource.setHasProperties(new ArrayList<>());
             for (Property property : resourceType.getProperties()) {
-                resource.getHasProperties().add(HasProperty.builder().property(property).build());
+                resource.getHasProperties().add(HasProperty.builder().property(property).value("").queryUrl("").lastModifiedAt(0L).build());
             }
             resourceRepository.save(resource);
             return 1;
@@ -71,5 +71,16 @@ public class ResourceServiceImpl implements ResourceService {
             return 1;
         }
         return 0;
+    }
+
+    public void updateProperty(HasProperty hasProperty) {
+        hasProperty.setLastModifiedAt(new Date().getTime());
+        if (hasProperty.getValue() == null) {
+            hasProperty.setValue("");
+        }
+        if (hasProperty.getQueryUrl() == null) {
+            hasProperty.setQueryUrl("");
+        }
+        resourceRepository.updateProperty(hasProperty);
     }
 }

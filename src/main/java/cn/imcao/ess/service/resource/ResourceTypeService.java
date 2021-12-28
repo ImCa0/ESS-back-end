@@ -1,5 +1,6 @@
 package cn.imcao.ess.service.resource;
 
+import cn.imcao.ess.entity.resource.DO.HasProperty;
 import cn.imcao.ess.entity.resource.DO.ResourceType;
 import cn.imcao.ess.entity.resource.VO.ResourceTypeQueryVO;
 import org.springframework.data.domain.Page;

@@ -1,7 +1,5 @@
 package cn.imcao.ess;
 
-import cn.imcao.ess.entity.resource.DO.Resource;
-import cn.imcao.ess.mapper.resource.ResourceRepository;
 import org.jasypt.encryption.StringEncryptor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

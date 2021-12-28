@@ -1,5 +1,6 @@
 package cn.imcao.ess.service.resource;
 
+import cn.imcao.ess.entity.resource.DO.HasProperty;
 import cn.imcao.ess.entity.resource.DO.Resource;
 import cn.imcao.ess.entity.resource.VO.ResourceQueryVO;
 import org.springframework.data.domain.Page;
@@ -18,4 +19,6 @@ public interface ResourceService {
     Integer createResource(UUID resourceTypeId, Resource resource);
 
     Integer updateResource(Resource resource);
+
+    void updateProperty(HasProperty hasProperty);
 }

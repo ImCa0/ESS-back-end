@@ -1,5 +1,6 @@
 package cn.imcao.ess.mapper.resource;
 
+import cn.imcao.ess.entity.resource.DO.HasProperty;
 import cn.imcao.ess.entity.resource.DO.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -41,4 +42,12 @@ public interface ResourceRepository extends Neo4jRepository<Resource, UUID> {
                              @Param("type") String type,
                              @Param("isShared") Boolean isShared,
                              Pageable pageable);
+
+    @Query("match ()-[r:HAS_PROPERTY]->() " +
+            "where id(r) = :#{#property.id} " +
+            "set r.value = :#{#property.value}, " +
+            "r.queryUrl = :#{#property.queryUrl}, " +
+            "r.lastModifiedAt = :#{#property.lastModifiedAt} " +
+            "RETURN r")
+    void updateProperty(@Param("property") HasProperty hasProperty);
 }

@@ -3,10 +3,7 @@ package cn.imcao.ess.entity.resource.DO;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.neo4j.core.schema.GeneratedValue;
-import org.springframework.data.neo4j.core.schema.Id;
-import org.springframework.data.neo4j.core.schema.RelationshipProperties;
-import org.springframework.data.neo4j.core.schema.TargetNode;
+import org.springframework.data.neo4j.core.schema.*;
 
 /**
  * @author ImCaO
@@ -19,8 +16,7 @@ import org.springframework.data.neo4j.core.schema.TargetNode;
 @Builder
 public class HasProperty {
 
-    @Id
-    @GeneratedValue
+    @RelationshipId
     private Long id;
 
     private String value;

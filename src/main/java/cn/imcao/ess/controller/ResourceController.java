@@ -1,5 +1,6 @@
 package cn.imcao.ess.controller;
 
+import cn.imcao.ess.entity.resource.DO.HasProperty;
 import cn.imcao.ess.entity.resource.DO.Resource;
 import cn.imcao.ess.entity.resource.VO.ResourceQueryVO;
 import cn.imcao.ess.entity.response.FailResponse;
@@ -75,6 +76,16 @@ public class ResourceController {
             } else {
                 return new FailResponse(400, "更新失败");
             }
+        } catch (Exception e) {
+            return new FailResponse(500, e.getMessage());
+        }
+    }
+
+    @PostMapping("/property")
+    public Response updateProperty(@RequestBody HasProperty hasProperty) {
+        try {
+            resourceService.updateProperty(hasProperty);
+            return new SuccessResponse("更新成功");
         } catch (Exception e) {
             return new FailResponse(500, e.getMessage());
         }
