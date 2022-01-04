@@ -31,7 +31,7 @@ public class ResourceController {
         this.resourceService = resourceService;
     }
 
-    @GetMapping("/query")
+    @GetMapping
     public Response queryPage(@RequestHeader("X-Token") String token, ResourceQueryVO vo) {
         TokenVerity verity = JwtUtil.verity(token);
         int enterpriseId = verity.getEnterpriseId();
@@ -48,7 +48,7 @@ public class ResourceController {
         }
     }
 
-    @PostMapping("/create")
+    @PostMapping
     public Response createResource(@RequestHeader("X-Token") String token,
                                    @RequestBody Resource resource) {
         TokenVerity verity = JwtUtil.verity(token);
@@ -61,7 +61,7 @@ public class ResourceController {
         }
     }
 
-    @PostMapping("/update")
+    @PutMapping
     public Response updateResource(@RequestBody Resource resource) {
         try {
             Integer update = resourceService.updateResource(resource);
@@ -75,7 +75,7 @@ public class ResourceController {
         }
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping
     public Response deleteResource(@RequestBody Resource resource) {
         try {
             resourceService.deleteResource(resource);
@@ -85,7 +85,7 @@ public class ResourceController {
         }
     }
 
-    @PostMapping("/property")
+    @PutMapping("/property")
     public Response updateProperty(@RequestBody HasProperty hasProperty) {
         try {
             resourceService.updateProperty(hasProperty);

@@ -30,7 +30,7 @@ public class ResourceTypeController {
         this.resourceTypeService = resourceTypeService;
     }
 
-    @GetMapping("/query")
+    @GetMapping
     public Response queryPage(@RequestHeader("X-Token") String token, ResourceTypeQueryVO vo) {
         TokenVerity verity = JwtUtil.verity(token);
         int enterpriseId = verity.getEnterpriseId();
@@ -47,7 +47,7 @@ public class ResourceTypeController {
         }
     }
 
-    @PostMapping("/create")
+    @PostMapping
     public Response createResourceType(@RequestHeader("X-Token") String token, ResourceType resourceType) {
         TokenVerity verity = JwtUtil.verity(token);
         String username = verity.getUsername();
@@ -65,7 +65,7 @@ public class ResourceTypeController {
         }
     }
 
-    @PostMapping("/update")
+    @PutMapping
     public Response updateResourceType(@RequestBody ResourceType resourceType) {
         try {
             Integer update = resourceTypeService.updateResourceType(resourceType);
