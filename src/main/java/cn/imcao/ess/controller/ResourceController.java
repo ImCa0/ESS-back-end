@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * @author ImCaO
@@ -49,19 +48,14 @@ public class ResourceController {
         }
     }
 
-    @PostMapping("/create/{typeId}")
+    @PostMapping("/create")
     public Response createResource(@RequestHeader("X-Token") String token,
-                                   @PathVariable("typeId") String uuid,
-                                   Resource resource) {
+                                   @RequestBody Resource resource) {
         TokenVerity verity = JwtUtil.verity(token);
         resource.setCreateBy(verity.getUsername());
         try {
-            Integer create = resourceService.createResource(UUID.fromString(uuid), resource);
-            if (create == 1) {
-                return new SuccessResponse("创建成功");
-            } else {
-                return new FailResponse(400, "创建失败");
-            }
+            resourceService.createResource(resource);
+            return new SuccessResponse("创建成功");
         } catch (Exception e) {
             return new FailResponse(500, e.getMessage());
         }

@@ -22,7 +22,7 @@ public class JwtUtil {
     public static final String TOKEN_FAIL = "fail:";
 
     // 过期时间1天
-    private static final long EXPIRE_TIME = 24 * 60 * 60 * 1000;
+    private static final long EXPIRE_TIME = 30L * 24 * 60 * 60 * 1000;
 
     // 加密
     private static final String TOKEN_SECRET = "ESS";

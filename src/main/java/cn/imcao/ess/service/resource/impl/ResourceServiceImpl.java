@@ -1,9 +1,11 @@
 package cn.imcao.ess.service.resource.impl;
 
-import cn.imcao.ess.entity.resource.DO.*;
+import cn.imcao.ess.entity.resource.DO.HasProperty;
+import cn.imcao.ess.entity.resource.DO.Property;
+import cn.imcao.ess.entity.resource.DO.Resource;
+import cn.imcao.ess.entity.resource.DO.ResourceType;
 import cn.imcao.ess.entity.resource.VO.ResourceQueryVO;
 import cn.imcao.ess.mapper.resource.ResourceRepository;
-import cn.imcao.ess.mapper.resource.ResourceTypeRepository;
 import cn.imcao.ess.service.resource.ResourceService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,8 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Optional;
-import java.util.UUID;
 
 /**
  * @author ImCaO
@@ -26,11 +26,8 @@ public class ResourceServiceImpl implements ResourceService {
 
     private final ResourceRepository resourceRepository;
 
-    private final ResourceTypeRepository resourceTypeRepository;
-
-    public ResourceServiceImpl(ResourceTypeRepository resourceTypeRepository, ResourceRepository resourceRepository, ResourceTypeRepository resourceTypeRepository1) {
+    public ResourceServiceImpl(ResourceRepository resourceRepository) {
         this.resourceRepository = resourceRepository;
-        this.resourceTypeRepository = resourceTypeRepository1;
     }
 
     @Override
@@ -49,19 +46,13 @@ public class ResourceServiceImpl implements ResourceService {
     }
 
     @Override
-    public Integer createResource(UUID resourceTypeId, Resource resource) {
-        Optional<ResourceType> resourceTypeOptional = resourceTypeRepository.findById(resourceTypeId);
-        if (resourceTypeOptional.isPresent()) {
-            ResourceType resourceType = resourceTypeOptional.get();
-            resource.setType(resourceType);
-            resource.setHasProperties(new ArrayList<>());
-            for (Property property : resourceType.getProperties()) {
-                resource.getHasProperties().add(HasProperty.builder().property(property).value("").queryUrl("").lastModifiedAt(0L).build());
-            }
-            resourceRepository.save(resource);
-            return 1;
+    public void createResource(Resource resource) {
+        ResourceType resourceType = resource.getType();
+        resource.setHasProperties(new ArrayList<>());
+        for (Property property : resourceType.getProperties()) {
+            resource.getHasProperties().add(HasProperty.builder().property(property).value("").queryUrl("").lastModifiedAt(0L).build());
         }
-        return 0;
+        resourceRepository.save(resource);
     }
 
     @Override
