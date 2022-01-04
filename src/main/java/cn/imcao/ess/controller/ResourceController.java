@@ -75,6 +75,16 @@ public class ResourceController {
         }
     }
 
+    @DeleteMapping("/delete")
+    public Response deleteResource(@RequestBody Resource resource) {
+        try {
+            resourceService.deleteResource(resource);
+            return new SuccessResponse("删除成功");
+        } catch (Exception e) {
+            return new FailResponse(500, e.getMessage());
+        }
+    }
+
     @PostMapping("/property")
     public Response updateProperty(@RequestBody HasProperty hasProperty) {
         try {

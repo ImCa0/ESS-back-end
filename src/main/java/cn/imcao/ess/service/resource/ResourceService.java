@@ -18,5 +18,7 @@ public interface ResourceService {
 
     Integer updateResource(Resource resource);
 
+    void deleteResource(Resource resource);
+
     void updateProperty(HasProperty hasProperty);
 }

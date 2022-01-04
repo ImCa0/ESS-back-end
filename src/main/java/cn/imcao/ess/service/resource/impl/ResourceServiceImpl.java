@@ -64,6 +64,11 @@ public class ResourceServiceImpl implements ResourceService {
         return 0;
     }
 
+    @Override
+    public void deleteResource(Resource resource) {
+        resourceRepository.delete(resource);
+    }
+
     public void updateProperty(HasProperty hasProperty) {
         hasProperty.setLastModifiedAt(new Date().getTime());
         if (hasProperty.getValue() == null) {
