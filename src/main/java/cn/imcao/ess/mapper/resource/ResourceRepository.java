@@ -2,12 +2,14 @@ package cn.imcao.ess.mapper.resource;
 
 import cn.imcao.ess.entity.resource.DO.HasProperty;
 import cn.imcao.ess.entity.resource.DO.Resource;
+import cn.imcao.ess.entity.resource.DO.ResourceType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.data.neo4j.repository.query.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -50,4 +52,7 @@ public interface ResourceRepository extends Neo4jRepository<Resource, UUID> {
             "r.lastModifiedAt = :#{#property.lastModifiedAt} " +
             "RETURN r")
     void updateProperty(@Param("property") HasProperty hasProperty);
+
+    @Query("MATCH (ResourceType{uuid: $uuid})-[:HAS_RESOURCE]->(n:Resource) RETURN n")
+    List<Resource> findAllByType(@Param("uuid") String uuid);
 }

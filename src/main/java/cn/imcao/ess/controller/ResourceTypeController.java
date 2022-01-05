@@ -1,5 +1,6 @@
 package cn.imcao.ess.controller;
 
+import cn.imcao.ess.entity.resource.DO.Property;
 import cn.imcao.ess.entity.resource.DO.ResourceType;
 import cn.imcao.ess.entity.resource.VO.ResourceTypeQueryVO;
 import cn.imcao.ess.entity.response.FailResponse;
@@ -73,6 +74,20 @@ public class ResourceTypeController {
                 return new SuccessResponse("更新成功");
             } else {
                 return new FailResponse(400, "更新失败");
+            }
+        } catch (Exception e) {
+            return new FailResponse(500, e.getMessage());
+        }
+    }
+
+    @PostMapping("/{typeId}/property")
+    public Response createProperty(@PathVariable String typeId, @RequestBody Property property) {
+        try {
+            String res = resourceTypeService.createProperty(typeId, property);
+            if ("属性创建成功".equals(res)) {
+                return new SuccessResponse(res);
+            } else {
+                return new FailResponse(400, res);
             }
         } catch (Exception e) {
             return new FailResponse(500, e.getMessage());
