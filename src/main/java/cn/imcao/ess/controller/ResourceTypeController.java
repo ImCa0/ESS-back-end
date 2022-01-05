@@ -80,6 +80,16 @@ public class ResourceTypeController {
         }
     }
 
+    @DeleteMapping
+    public Response deleteResourceType(@RequestBody ResourceType resourceType) {
+        try {
+            resourceTypeService.deleteResourceType(resourceType);
+            return new SuccessResponse("删除成功");
+        } catch (Exception e) {
+            return new FailResponse(500, e.getMessage());
+        }
+    }
+
     @PostMapping("/property/{typeId}")
     public Response createProperty(@PathVariable String typeId, @RequestBody Property property) {
         try {

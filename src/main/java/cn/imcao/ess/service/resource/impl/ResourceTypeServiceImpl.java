@@ -77,6 +77,25 @@ public class ResourceTypeServiceImpl implements ResourceTypeService {
     }
 
     @Override
+    public void deleteResourceType(ResourceType resourceType) {
+        List<Resource> resourceList = resourceRepository.findAllByType(resourceType.getUuid().toString());
+        for (int i = 0; i < resourceList.size(); i++) {
+            Optional<Resource> resourceOptional = resourceRepository.findById(resourceList.get(i).getUuid());
+            if (resourceOptional.isPresent()) {
+                resourceList.set(i, resourceOptional.get());
+            }
+        }
+        for (Resource resource : resourceList) {
+            resourceRepository.delete(resource);
+        }
+        List<Property> propertyList = resourceType.getProperties();
+        for (Property property : propertyList) {
+            propertyRepository.delete(property);
+        }
+        resourceTypeRepository.delete(resourceType);
+    }
+
+    @Override
     public String createProperty(String typeId, Property property) {
         Optional<ResourceType> resourceTypeOptional = resourceTypeRepository.findById(UUID.fromString(typeId));
         if (!resourceTypeOptional.isPresent()) {

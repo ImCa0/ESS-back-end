@@ -19,6 +19,8 @@ public interface ResourceTypeService {
 
     Integer updateResourceType(ResourceType resourceType);
 
+    void deleteResourceType(ResourceType resourceType);
+
     String createProperty(String typeId, Property property);
 
     void updateProperty(Property property);
