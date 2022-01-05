@@ -3,6 +3,7 @@ package cn.imcao.ess.service.resource.impl;
 import cn.imcao.ess.entity.resource.DO.*;
 import cn.imcao.ess.entity.resource.VO.ResourceTypeQueryVO;
 import cn.imcao.ess.mapper.resource.EnterpriseRepository;
+import cn.imcao.ess.mapper.resource.PropertyRepository;
 import cn.imcao.ess.mapper.resource.ResourceRepository;
 import cn.imcao.ess.mapper.resource.ResourceTypeRepository;
 import cn.imcao.ess.service.resource.ResourceTypeService;
@@ -30,10 +31,13 @@ public class ResourceTypeServiceImpl implements ResourceTypeService {
 
     private final ResourceRepository resourceRepository;
 
-    public ResourceTypeServiceImpl(ResourceTypeRepository resourceTypeRepository, EnterpriseRepository enterpriseRepository, ResourceRepository resourceRepository) {
+    private final PropertyRepository propertyRepository;
+
+    public ResourceTypeServiceImpl(ResourceTypeRepository resourceTypeRepository, EnterpriseRepository enterpriseRepository, ResourceRepository resourceRepository, PropertyRepository propertyRepository) {
         this.resourceTypeRepository = resourceTypeRepository;
         this.enterpriseRepository = enterpriseRepository;
         this.resourceRepository = resourceRepository;
+        this.propertyRepository = propertyRepository;
     }
 
     @Override
@@ -95,5 +99,15 @@ public class ResourceTypeServiceImpl implements ResourceTypeService {
             }
             return "属性创建成功";
         }
+    }
+
+    @Override
+    public void updateProperty(Property property) {
+        propertyRepository.save(property);
+    }
+
+    @Override
+    public void deleteProperty(Property property) {
+        propertyRepository.delete(property);
     }
 }

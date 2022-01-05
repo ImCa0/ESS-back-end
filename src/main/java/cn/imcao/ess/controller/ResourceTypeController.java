@@ -80,7 +80,7 @@ public class ResourceTypeController {
         }
     }
 
-    @PostMapping("/{typeId}/property")
+    @PostMapping("/property/{typeId}")
     public Response createProperty(@PathVariable String typeId, @RequestBody Property property) {
         try {
             String res = resourceTypeService.createProperty(typeId, property);
@@ -89,6 +89,26 @@ public class ResourceTypeController {
             } else {
                 return new FailResponse(400, res);
             }
+        } catch (Exception e) {
+            return new FailResponse(500, e.getMessage());
+        }
+    }
+
+    @PutMapping("/property")
+    public Response updateProperty(@RequestBody Property property) {
+        try {
+            resourceTypeService.updateProperty(property);
+            return new SuccessResponse("属性更新成功");
+        } catch (Exception e) {
+            return new FailResponse(500, e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/property")
+    public Response deleteProperty(@RequestBody Property property) {
+        try {
+            resourceTypeService.deleteProperty(property);
+            return new SuccessResponse("属性删除成功");
         } catch (Exception e) {
             return new FailResponse(500, e.getMessage());
         }

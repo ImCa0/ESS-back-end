@@ -20,4 +20,8 @@ public interface ResourceTypeService {
     Integer updateResourceType(ResourceType resourceType);
 
     String createProperty(String typeId, Property property);
+
+    void updateProperty(Property property);
+
+    void deleteProperty(Property property);
 }
