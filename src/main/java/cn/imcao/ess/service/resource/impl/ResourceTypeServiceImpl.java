@@ -96,11 +96,17 @@ public class ResourceTypeServiceImpl implements ResourceTypeService {
     }
 
     @Override
+    public List<Property> queryPresetProperty() {
+        return propertyRepository.findAllByIsPreset(true);
+    }
+
+    @Override
     public String createProperty(String typeId, Property property) {
         Optional<ResourceType> resourceTypeOptional = resourceTypeRepository.findById(UUID.fromString(typeId));
         if (!resourceTypeOptional.isPresent()) {
             return "资源类型不存在";
         } else {
+            property.setIsPreset(false);
             ResourceType resourceType = resourceTypeOptional.get();
             resourceType.getProperties().add(property);
             resourceTypeRepository.save(resourceType);

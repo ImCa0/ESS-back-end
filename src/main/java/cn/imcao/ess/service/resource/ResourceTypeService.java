@@ -6,6 +6,8 @@ import cn.imcao.ess.entity.resource.DO.ResourceType;
 import cn.imcao.ess.entity.resource.VO.ResourceTypeQueryVO;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 /**
  * @author ImCaO
  * @description 制造资源类型服务接口
@@ -20,6 +22,8 @@ public interface ResourceTypeService {
     Integer updateResourceType(ResourceType resourceType);
 
     void deleteResourceType(ResourceType resourceType);
+
+    List<Property> queryPresetProperty();
 
     String createProperty(String typeId, Property property);
 

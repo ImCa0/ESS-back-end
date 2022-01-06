@@ -90,6 +90,16 @@ public class ResourceTypeController {
         }
     }
 
+    @GetMapping("/property")
+    public Response queryPresetProperty() {
+        try {
+            List<Property> propertyList = resourceTypeService.queryPresetProperty();
+            return new SuccessResponse(propertyList);
+        } catch (Exception e) {
+            return new FailResponse(500, e.getMessage());
+        }
+    }
+
     @PostMapping("/property/{typeId}")
     public Response createProperty(@PathVariable String typeId, @RequestBody Property property) {
         try {
