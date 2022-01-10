@@ -56,6 +56,12 @@ public class ResourceTypeServiceImpl implements ResourceTypeService {
     }
 
     @Override
+    public ResourceType queryById(String id) {
+        Optional<ResourceType> resourceTypeOptional = resourceTypeRepository.findById(UUID.fromString(id));
+        return resourceTypeOptional.orElse(null);
+    }
+
+    @Override
     public Integer createResourceType(Integer enterpriseId, ResourceType resourceType) {
         Optional<Enterprise> enterpriseOptional = enterpriseRepository.findById(enterpriseId);
         if (enterpriseOptional.isPresent()) {

@@ -31,6 +31,16 @@ public class ResourceTypeController {
         this.resourceTypeService = resourceTypeService;
     }
 
+    @GetMapping("/{typeId}")
+    public Response queryById(@PathVariable String typeId) {
+        try {
+            ResourceType resourceType = resourceTypeService.queryById(typeId);
+            return new SuccessResponse(resourceType);
+        } catch (Exception e) {
+            return new FailResponse(500, "查询失败");
+        }
+    }
+
     @GetMapping
     public Response queryPage(@RequestHeader("X-Token") String token, ResourceTypeQueryVO vo) {
         TokenVerity verity = JwtUtil.verity(token);
@@ -49,7 +59,7 @@ public class ResourceTypeController {
     }
 
     @PostMapping
-    public Response createResourceType(@RequestHeader("X-Token") String token, ResourceType resourceType) {
+    public Response createResourceType(@RequestHeader("X-Token") String token, @RequestBody ResourceType resourceType) {
         TokenVerity verity = JwtUtil.verity(token);
         String username = verity.getUsername();
         int enterpriseId = verity.getEnterpriseId();

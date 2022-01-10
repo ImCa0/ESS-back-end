@@ -17,6 +17,8 @@ public interface ResourceTypeService {
 
     Page<ResourceType> queryPage(Integer enterpriseId, ResourceTypeQueryVO resourceTypeQueryVO);
 
+    ResourceType queryById(String id);
+
     Integer createResourceType(Integer enterpriseId, ResourceType resourceType);
 
     Integer updateResourceType(ResourceType resourceType);
