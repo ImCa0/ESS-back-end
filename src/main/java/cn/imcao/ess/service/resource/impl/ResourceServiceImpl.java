@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Optional;
+import java.util.UUID;
 
 /**
  * @author ImCaO
@@ -43,6 +45,12 @@ public class ResourceServiceImpl implements ResourceService {
         }
         PageRequest pageRequest = PageRequest.of(vo.getPage() - 1, vo.getLimit(), sort);
         return resourceRepository.queryPage(enterpriseId, vo.getName(), vo.getIdentifier(), vo.getType(), vo.getIsShared(), pageRequest);
+    }
+
+    @Override
+    public Resource queryById(String id) {
+        Optional<Resource> resourceOptional = resourceRepository.findById(UUID.fromString(id));
+        return resourceOptional.orElse(null);
     }
 
     @Override

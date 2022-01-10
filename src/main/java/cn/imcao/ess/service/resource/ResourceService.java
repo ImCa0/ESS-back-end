@@ -14,6 +14,8 @@ public interface ResourceService {
 
     Page<Resource> queryPage(Integer enterpriseId, ResourceQueryVO resourceQueryVO);
 
+    Resource queryById(String id);
+
     void createResource(Resource resource);
 
     Integer updateResource(Resource resource);

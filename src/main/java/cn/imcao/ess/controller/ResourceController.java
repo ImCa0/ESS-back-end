@@ -48,6 +48,16 @@ public class ResourceController {
         }
     }
 
+    @GetMapping("/{id}")
+    public Response queryById(@PathVariable String id) {
+        try {
+            Resource resource = resourceService.queryById(id);
+            return new SuccessResponse(resource);
+        } catch (Exception e) {
+            return new FailResponse(500, e.getMessage());
+        }
+    }
+
     @PostMapping
     public Response createResource(@RequestHeader("X-Token") String token,
                                    @RequestBody Resource resource) {

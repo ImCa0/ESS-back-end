@@ -37,7 +37,7 @@ public class ResourceTypeController {
             ResourceType resourceType = resourceTypeService.queryById(typeId);
             return new SuccessResponse(resourceType);
         } catch (Exception e) {
-            return new FailResponse(500, "查询失败");
+            return new FailResponse(500, e.getMessage());
         }
     }
 
